@@ -85,6 +85,61 @@ btnScollto.addEventListener("click", function (e) {
   //   behavior: "smooth",
   // });
 
+  // NEW WAY
   // modern way  the function works in only  modern browser
   section1.scrollIntoView({ behavior: "smooth" });
 });
+
+// TWO ways to to implement eventHandler
+const highlight = document.querySelector(".highlight");
+highlight.addEventListener("keypress", function (e) {
+  // if (e.key == 13) {
+  //   lert("checking");
+  // }
+});
+
+const onclick = function () {
+  console.log("second way");
+};
+// event bubling
+const nav = document.querySelector(".nav");
+const nav_links = document.querySelector(".nav__links");
+const nav_link = document.querySelectorAll(".nav__link");
+
+nav_link.forEach((el) => {
+  el.addEventListener("click", function (e) {
+    e.preventDefault();
+    const target = e.target;
+    const id = this.getAttribute("href");
+    document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+  });
+});
+
+const randint = function (min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+// nav.addEventListener("click", function (e) {
+//   nav.style.backgroundColor = `rgba(${randint(0, 255)},${randint(
+//     0,
+//     255
+//   )},${randint(0, 255)})`;
+//   console.log(e.target);
+// });
+
+// nav_links.addEventListener("click", function (e) {
+//   nav_links.style.backgroundColor = `rgba(${randint(0, 255)},${randint(
+//     0,
+//     255
+//   )},${randint(0, 255)})`;
+//   console.log(e.target);
+//   // console.log("nav_link");
+// });
+// nav_link.addEventListener("click", function (e) {
+//   nav_link.style.backgroundColor = `rgba(${randint(0, 255)},${randint(
+//     0,
+//     255
+//   )},${randint(0, 255)})`;
+//   console.log(e.target);
+//   // console.log("nav_link");
+// });
