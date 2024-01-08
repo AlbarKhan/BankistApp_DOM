@@ -106,13 +106,27 @@ const nav = document.querySelector(".nav");
 const nav_links = document.querySelector(".nav__links");
 const nav_link = document.querySelectorAll(".nav__link");
 
-nav_link.forEach((el) => {
-  el.addEventListener("click", function (e) {
-    e.preventDefault();
-    const target = e.target;
-    const id = this.getAttribute("href");
+// nav_link.forEach((el) => {
+//   el.addEventListener("click", function (e) {
+//     e.preventDefault();
+//     const target = e.target;
+//     const id = this.getAttribute("href");
+//     document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+//   });
+// });
+
+// using delegation
+// Add Event listener to a common parent element
+// Determine  what  element originated event
+nav_links.addEventListener("click", function (e) {
+  e.preventDefault();
+  const id = e.target.getAttribute("href");
+  console.log(id);
+  if (e.target.classList.contains("nav__link")) {
     document.querySelector(id).scrollIntoView({ behavior: "smooth" });
-  });
+  } else {
+    return;
+  }
 });
 
 const randint = function (min, max) {
@@ -143,3 +157,33 @@ const randint = function (min, max) {
 //   console.log(e.target);
 //   // console.log("nav_link");
 // });
+
+const h1 = document.querySelector("h1");
+// console.log(h1.querySelectorAll(".highlight"));
+
+const div = document.querySelector("div");
+// console.log(div);
+// console.log(div.querySelectorAll(".highlight"));
+// console.log(div.childNodes);
+// console.log((div.firstElementChild.style.color = "green"));
+// console.log((div.lastElementChild.style.backgroundColor = "red"));
+// console.log(
+//   (div.parentElement.style.backgroundColor = "var(--gradient-secondary)")
+// );
+// console.log(div.closest());
+// div.closest(".header").style.backgroundColor = "var(--color-primary)";
+
+// console.log((div.previousElementSibling.style.color = "purple"));
+// console.log(div.nextElementSibling);
+
+const tabs = document.querySelectorAll(".operations__tab");
+const tabsContainer = document.querySelector(".operations__tab-container");
+const tabsContent = document.querySelector(".operations__content");
+
+tabsContainer.addEventListener("click", function (e) {
+  const clicked = e.target.closest(".operations__tab");
+  // console.log(clicked);
+  if (!clicked) return;
+  tabs.forEach((t) => t.classList.remove("operations__tab--active"));
+  clicked.classList.add("operations__tab--active");
+});
