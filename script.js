@@ -121,7 +121,7 @@ const nav_link = document.querySelectorAll(".nav__link");
 nav_links.addEventListener("click", function (e) {
   e.preventDefault();
   const id = e.target.getAttribute("href");
-  console.log(id);
+  // console.log(id);
   if (e.target.classList.contains("nav__link")) {
     document.querySelector(id).scrollIntoView({ behavior: "smooth" });
   } else {
@@ -178,12 +178,38 @@ const div = document.querySelector("div");
 
 const tabs = document.querySelectorAll(".operations__tab");
 const tabsContainer = document.querySelector(".operations__tab-container");
-const tabsContent = document.querySelector(".operations__content");
+const tabsContent = document.querySelectorAll(".operations__content");
 
 tabsContainer.addEventListener("click", function (e) {
   const clicked = e.target.closest(".operations__tab");
-  // console.log(clicked);
+  console.log(clicked);
   if (!clicked) return;
+  // Active tab
   tabs.forEach((t) => t.classList.remove("operations__tab--active"));
   clicked.classList.add("operations__tab--active");
+
+  tabsContent.forEach((c) => c.classList.remove("operations__content--active"));
+
+  // Active content
+  console.log(clicked.dataset.tab);
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add("operations__content--active");
 });
+
+const handleHover = function (e, opacity) {
+  if (e.target.classList.contains("nav__link")) {
+    const link = e.target;
+    const siblings = link.closest(".nav").querySelectorAll(".nav__link");
+    const logo = link.closest(".nav").querySelector("img");
+
+    siblings.forEach((el) => {
+      if (el !== link) el.style.opacity = this;
+    });
+    logo.style.opacity = this;
+  }
+};
+
+// MENU FADE ANMATION
+nav.addEventListener("mouseover", handleHover.bind(0.5));
+nav.addEventListener("mouseout", handleHover.bind(1));
