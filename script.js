@@ -32,7 +32,7 @@ const allSection = document.querySelectorAll(".section");
 
 const allButton = document.getElementsByTagName("button");
 const header = document.querySelector(".header");
-console.log(header);
+// console.log(header);
 const message = document.createElement("div");
 message.className = "cookie-message";
 message.innerHTML = `we use cookies  for improved functionality and analytics <button class="btn btn--close-cookie">Got it !</button>`;
@@ -50,10 +50,10 @@ document
 
 message.style.backgroundColor = "#37383d";
 
-console.log(message.style.backgroundColor);
-console.log(message.style.color);
-console.log(getComputedStyle(message).color);
-console.log(getComputedStyle(message).height);
+// console.log(message.style.backgroundColor);
+// console.log(message.style.color);
+// console.log(getComputedStyle(message).color);
+// console.log(getComputedStyle(message).height);
 
 const updatesheight = (message.style.height = `${
   40 + Number.parseInt(getComputedStyle(message).height)
@@ -214,13 +214,35 @@ const handleHover = function (e, opacity) {
 nav.addEventListener("mouseover", handleHover.bind(0.5));
 nav.addEventListener("mouseout", handleHover.bind(1));
 
+// sticky naigationBar
 const initialCoords = section1.getBoundingClientRect();
-console.log(initialCoords.y);
+// console.log(initialCoords.y);
 window.addEventListener("scroll", function (e) {
-  console.log(e);
+  // console.log(e);
   if (this.window.pageYOffset >= initialCoords.top) {
     nav.classList.add("sticky");
   } else {
     nav.classList.remove("sticky");
   }
+});
+
+// Revelaing sections
+
+const allSections = document.querySelectorAll(".section");
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+  if (!entry.isIntersecting) return;
+
+  entry.target.classList.remove("section--hidden");
+  observer.unobserve(entry.target);
+};
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+allSection.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add("section--hidden");
 });
