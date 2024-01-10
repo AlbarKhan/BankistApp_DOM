@@ -231,7 +231,7 @@ window.addEventListener("scroll", function (e) {
 const allSections = document.querySelectorAll(".section");
 const revealSection = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
+  // console.log(entry);
   if (!entry.isIntersecting) return;
 
   entry.target.classList.remove("section--hidden");
@@ -245,4 +245,28 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 allSection.forEach(function (section) {
   sectionObserver.observe(section);
   section.classList.add("section--hidden");
+});
+
+// Lazy Loding Images
+
+const imgtargets = document.querySelectorAll("img[data-src]");
+// console.log(imgtargets);
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+  // console.log(entry);
+  if (!entry.isIntersecting) return;
+
+  entry.target.src = entry.target.dataset.src;
+  entry.target.addEventListener("load", (e) => {
+    entry.target.classList.remove("lazy-img");
+    observer.unobserve(entry.target);
+  });
+};
+const ImageObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+});
+
+imgtargets.forEach((img) => {
+  ImageObserver.observe(img);
 });
